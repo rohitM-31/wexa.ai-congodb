@@ -1,0 +1,25 @@
+name: CI
+
+# This workflow only checks that the harness code itself is sound
+# (syntax + unit tests) -- it deliberately does NOT run the live
+# benchmarks, since those need per-platform secrets and real free-tier
+# accounts. See README "How to reproduce" for running the real thing.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Syntax-check every module
+        run: python -m py_compile $(git ls-files '*.py')
+      - name: Run unit tests
+        run: python -m pytest tests/ -v

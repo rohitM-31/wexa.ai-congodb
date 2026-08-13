@@ -1,0 +1,43 @@
+# Two-platform config: CognoDB Cloud and Neo4j AuraDB Free, both
+# Bolt+Cypher, both benchmarked with the exact same adapter code
+# (src/adapters/bolt_cypher.py) -- see README "Fairness". The runner
+# refuses to start a platform whose "region" is still the literal
+# string "TODO", or whose specs.verified is not explicitly true --
+# see run_benchmark.py's load_platform_config() for why a numeric
+# field with just a "# TODO" comment isn't enough of a guard on its
+# own (YAML comments aren't part of the parsed value).
+
+cognodb:
+  adapter: bolt_cypher
+  display_name: "CognoDB Cloud (c0 free tier)"
+  uri_env: COGNODB_URI
+  user_env: COGNODB_USER
+  password_env: COGNODB_PASSWORD
+  region: "us-east4"
+  specs:
+    verified: true   # confirmed against CognoDB's own free-tier c0 spec (see assignment brief)
+    tier_name: "c0 (free)"
+    vcpu: 0.5
+    ram_gb: 0.25
+    disk_gb: 1
+    burstable: true
+  index_properties: ["id", "primary_country"]
+
+neo4j_aura_free:
+  adapter: bolt_cypher
+  display_name: "Neo4j AuraDB Free"
+  uri_env: NEO4J_AURA_URI
+  user_env: NEO4J_AURA_USER
+  password_env: NEO4J_AURA_PASSWORD
+  region: "asia-south1,"   # set to the region you pick when creating the instance
+  specs:
+    verified: true   # flip to true only after checking the values below against
+                        # the Aura Free spec shown in console.neo4j.io at instance-creation
+                        # time (Neo4j has changed Free tier's advertised resources before)
+    tier_name: "AuraDB Free"
+    vcpu: 0.5
+    ram_gb: 1
+    disk_gb: 1
+    burstable: true
+  index_properties: ["id", "primary_country"]
+

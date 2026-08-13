@@ -1,0 +1,11 @@
+{
+  "source": "Kaggle: Netflix Movies and TV Shows (shivamb/netflix-shows), netflix_titles.csv",
+  "sampling_method": "Full actor co-appearance graph: one Person node per distinct actor across all titles' cast lists, one ACTED_WITH edge per pair of actors sharing a title (multigraph, not deduplicated across titles unless --dedupe-edges was passed). No down-sampling applied -- the full graph already falls within the assignment's 100k-500k relationship band.",
+  "node_count": 36439,
+  "relationship_count": 305471,
+  "titles_used": 7982,
+  "dedupe_edges": false,
+  "random_seed": 42,
+  "start_nodes_file": "start_nodes.json",
+  "start_node_count": 200
+}
