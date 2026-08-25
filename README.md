@@ -1,7 +1,12 @@
 CognoDB Cloud — a reproducible benchmark (Netflix actor graph)
 
 This repo runs a scripted benchmark suite for CognoDB Cloud, measured on a fixed hardware tier against an identical derived dataset and a fixed set of logical queries. CognoDB speaks Bolt + Cypher over the official Neo4j Python driver, so it's benchmarked with a single adapter (src/adapters/bolt_cypher.py) — no ad-hoc query rewriting between runs to introduce inconsistency.
-
+copy "C:\Users\nagar\OneDrive\Documents\cognodb-netflix-benchmark-v3\.env" .env
+mkdir data\raw -Force
+copy "C:\Users\nagar\OneDrive\Documents\rohith\netflix_titles.csv" data\raw\netflix_titles.csv
+python -m pip install -r requirements.txt
+python scripts\prepare_dataset.py --raw data\raw\netflix_titles.csv --out data\sample
+python -m src.harness.run_benchmark --platform cognodb
 Scope — read this first
 
 This harness was originally built to benchmark CognoDB against several other managed graph database platforms, as part of a broader comparison exercise. This version reports CognoDB Cloud only — no other platform's numbers are included here. If this is going toward something graded on "completeness of metrics" / breadth of comparison against other platforms, a single-platform run is a real but partial result — it establishes CognoDB's own baseline numbers, but makes no comparative claim against any competitor.
